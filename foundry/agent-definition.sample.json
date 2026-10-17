@@ -1,0 +1,49 @@
+{
+  "kind": "prompt",
+  "model": "gpt-4o-mini",
+  "description": "3doodle assistant for multiturn 3D-print design and 3MF generation",
+  "instructions": "Load foundry/agent-instructions.md content here when creating the real agent.",
+  "tools": [
+    {
+      "name": "create_3mf_geometry",
+      "description": "Generate valid 3MF package(s) from geometry parameters and return downloadable artifact metadata"
+    }
+  ],
+  "response_format": {
+    "type": "json_schema",
+    "json_schema": {
+      "name": "doodle_design_response",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "designSummary": { "type": "string" },
+          "machineProfile": { "type": "string" },
+          "materialProfile": { "type": "string" },
+          "manufacturingChecks": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "artifacts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "filename": { "type": "string" },
+                "downloadUrl": { "type": "string" },
+                "status": { "type": "string" }
+              },
+              "required": ["filename", "downloadUrl", "status"]
+            }
+          }
+        },
+        "required": [
+          "designSummary",
+          "machineProfile",
+          "materialProfile",
+          "manufacturingChecks",
+          "artifacts"
+        ]
+      }
+    }
+  }
+}
